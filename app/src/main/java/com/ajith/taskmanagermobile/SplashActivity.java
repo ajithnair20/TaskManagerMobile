@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -19,7 +23,8 @@ public class SplashActivity extends AppCompatActivity {
         final Intent i = new Intent(SplashActivity.this, MainActivity.class);
 
         //Close the splash screen and open the main activity after 1 second
-        new Handler().postDelayed(new Runnable() {
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
+        ses.schedule(new Runnable() {
             @Override
             public void run() {
                 startActivity(i);
@@ -27,6 +32,6 @@ public class SplashActivity extends AppCompatActivity {
                 //Fade in fade out for smooth transition between the activities
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        },1000);
+        }, 1, TimeUnit.SECONDS);
     }
 }
